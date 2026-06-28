@@ -1,8 +1,8 @@
 import { Link } from "wouter";
-import { ArrowRight, CheckCircle2, FileText, Globe, Landmark, Users, Clock, ShieldCheck, ChevronRight, Star, HeartHandshake, Briefcase, Mail } from "lucide-react";
+import { ArrowRight, FileText, Landmark, ShieldCheck, ChevronRight, HeartHandshake, Briefcase, Mail, Phone, Video, MapPin, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useListServices, useListBlogPosts, useGetStats, useSubscribeNewsletter } from "@workspace/api-client-react";
+import { useListServices, useListBlogPosts, useSubscribeNewsletter } from "@workspace/api-client-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
@@ -10,7 +10,6 @@ import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 
 export default function Home() {
-  const { data: stats } = useGetStats();
   const { data: services, isLoading: servicesLoading } = useListServices();
   const { data: blogPosts, isLoading: blogLoading } = useListBlogPosts();
   const subscribeNewsletter = useSubscribeNewsletter();
@@ -88,40 +87,35 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Stats Section */}
+      {/* Modes de consultation */}
       <section className="py-12 bg-white border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="text-4xl font-serif font-bold text-primary mb-2">
-                {stats?.completedConsultations || "1,200+"}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="flex items-center gap-4 p-4">
+              <div className="w-12 h-12 bg-primary/5 rounded-sm flex items-center justify-center shrink-0">
+                <Video className="w-6 h-6 text-primary" />
               </div>
-              <div className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
-                Dossiers validés
-              </div>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-serif font-bold text-primary mb-2">
-                98%
-              </div>
-              <div className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
-                Taux de réussite
+              <div>
+                <p className="font-bold text-primary">Visioconférence</p>
+                <p className="text-sm text-muted-foreground">Consultation à distance sécurisée, depuis chez vous</p>
               </div>
             </div>
-            <div className="text-center">
-              <div className="text-4xl font-serif font-bold text-primary mb-2">
-                15+
+            <div className="flex items-center gap-4 p-4">
+              <div className="w-12 h-12 bg-primary/5 rounded-sm flex items-center justify-center shrink-0">
+                <Phone className="w-6 h-6 text-primary" />
               </div>
-              <div className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
-                Années d'expertise
+              <div>
+                <p className="font-bold text-primary">Par téléphone</p>
+                <p className="text-sm text-muted-foreground">Un conseiller disponible pour répondre à vos questions</p>
               </div>
             </div>
-            <div className="text-center">
-              <div className="text-4xl font-serif font-bold text-primary mb-2">
-                24h
+            <div className="flex items-center gap-4 p-4">
+              <div className="w-12 h-12 bg-primary/5 rounded-sm flex items-center justify-center shrink-0">
+                <MapPin className="w-6 h-6 text-primary" />
               </div>
-              <div className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
-                Réactivité moyenne
+              <div>
+                <p className="font-bold text-primary">En présentiel</p>
+                <p className="text-sm text-muted-foreground">Rendez-vous en cabinet pour un suivi personnalisé</p>
               </div>
             </div>
           </div>
@@ -276,53 +270,61 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Testimonials */}
+      {/* Nos engagements */}
       <section className="py-24 bg-white border-y border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary mb-4">
-              Ils nous ont fait confiance
+              Nos engagements envers vous
             </h2>
             <p className="text-lg text-muted-foreground">
-              Découvrez les retours de nos clients qui ont obtenu leur titre grâce à notre accompagnement.
+              Service France Expert est un cabinet d'accompagnement administratif. Voici ce que vous pouvez attendre de nous.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-muted/30 p-8 rounded-sm border border-border">
-              <div className="flex gap-1 mb-4">
-                {[1,2,3,4,5].map(i => <Star key={i} className="w-5 h-5 fill-accent text-accent" />)}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="flex gap-5 p-6 bg-muted/30 rounded-sm border border-border">
+              <div className="w-10 h-10 bg-primary/10 rounded-sm flex items-center justify-center shrink-0 mt-0.5">
+                <ShieldCheck className="w-5 h-5 text-primary" />
               </div>
-              <p className="text-muted-foreground italic mb-6 leading-relaxed">
-                "Après deux refus de ma préfecture, j'étais désespéré. L'équipe a repris mon dossier de zéro, identifié les failles et en 3 mois j'ai enfin obtenu mon passeport talent. Un service exceptionnel."
-              </p>
               <div>
-                <p className="font-bold text-primary">Amine B.</p>
-                <p className="text-sm text-muted-foreground">Passeport Talent</p>
+                <h3 className="font-bold text-primary mb-2">Analyse honnête de votre situation</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  Nous vous informons clairement des démarches possibles selon votre situation réelle, sans promettre de résultats que nous ne pouvons garantir. La décision finale appartient toujours à l'administration.
+                </p>
               </div>
             </div>
-            <div className="bg-muted/30 p-8 rounded-sm border border-border">
-              <div className="flex gap-1 mb-4">
-                {[1,2,3,4,5].map(i => <Star key={i} className="w-5 h-5 fill-accent text-accent" />)}
+            <div className="flex gap-5 p-6 bg-muted/30 rounded-sm border border-border">
+              <div className="w-10 h-10 bg-primary/10 rounded-sm flex items-center justify-center shrink-0 mt-0.5">
+                <Briefcase className="w-5 h-5 text-primary" />
               </div>
-              <p className="text-muted-foreground italic mb-6 leading-relaxed">
-                "Une réactivité impressionnante. J'avais besoin d'un rendez-vous en urgence pour un renouvellement de titre de séjour qui arrivait à expiration. Tout a été géré avec un grand professionnalisme."
-              </p>
               <div>
-                <p className="font-bold text-primary">Sarah M.</p>
-                <p className="text-sm text-muted-foreground">Renouvellement Étudiant</p>
+                <h3 className="font-bold text-primary mb-2">Dossier complet et conforme</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  Nous vérifions chaque pièce justificative avant le dépôt pour limiter les risques de dossier incomplet ou non conforme aux exigences de la préfecture.
+                </p>
               </div>
             </div>
-            <div className="bg-muted/30 p-8 rounded-sm border border-border">
-              <div className="flex gap-1 mb-4">
-                {[1,2,3,4,5].map(i => <Star key={i} className="w-5 h-5 fill-accent text-accent" />)}
+            <div className="flex gap-5 p-6 bg-muted/30 rounded-sm border border-border">
+              <div className="w-10 h-10 bg-primary/10 rounded-sm flex items-center justify-center shrink-0 mt-0.5">
+                <HeartHandshake className="w-5 h-5 text-primary" />
               </div>
-              <p className="text-muted-foreground italic mb-6 leading-relaxed">
-                "Je recommande vivement Service France Expert. L'approche humaine et la clarté des explications m'ont beaucoup rassuré face à une administration souvent opaque. Merci pour votre aide précieuse."
-              </p>
               <div>
-                <p className="font-bold text-primary">Carlos V.</p>
-                <p className="text-sm text-muted-foreground">Naturalisation</p>
+                <h3 className="font-bold text-primary mb-2">Accompagnement à chaque étape</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  Nous restons présents tout au long de la procédure : suivi du dossier, relances administratives, réponses à vos questions et orientation vers les bons interlocuteurs.
+                </p>
+              </div>
+            </div>
+            <div className="flex gap-5 p-6 bg-muted/30 rounded-sm border border-border">
+              <div className="w-10 h-10 bg-accent/10 rounded-sm flex items-center justify-center shrink-0 mt-0.5">
+                <AlertCircle className="w-5 h-5 text-accent" />
+              </div>
+              <div>
+                <h3 className="font-bold text-primary mb-2">Transparence sur nos limites</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  Nous sommes un cabinet d'accompagnement administratif, pas un cabinet d'avocats. Lorsque votre situation nécessite une représentation juridique, nous vous orientons vers un professionnel habilité.
+                </p>
               </div>
             </div>
           </div>
