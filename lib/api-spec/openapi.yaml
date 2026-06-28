@@ -3,13 +3,28 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: Service France Expert API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: contact
+    description: Contact and callback requests
+  - name: appointments
+    description: Appointment booking
+  - name: consultations
+    description: Consultation intake requests
+  - name: newsletter
+    description: Newsletter subscriptions
+  - name: services
+    description: Services catalog
+  - name: faq
+    description: Frequently asked questions
+  - name: blog
+    description: Blog posts and guides
+
 paths:
   /healthz:
     get:
@@ -24,6 +39,264 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /contact:
+    post:
+      operationId: submitContact
+      tags: [contact]
+      summary: Submit a contact or callback request
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ContactInput"
+      responses:
+        "201":
+          description: Contact request submitted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContactRequest"
+        "400":
+          description: Invalid input
+
+  /contact/{id}:
+    get:
+      operationId: getContact
+      tags: [contact]
+      summary: Get a contact request by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Contact request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContactRequest"
+        "404":
+          description: Not found
+
+  /appointments:
+    post:
+      operationId: createAppointment
+      tags: [appointments]
+      summary: Book a consultation appointment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AppointmentInput"
+      responses:
+        "201":
+          description: Appointment created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Appointment"
+        "400":
+          description: Invalid input
+
+    get:
+      operationId: listAppointments
+      tags: [appointments]
+      summary: List all appointments
+      responses:
+        "200":
+          description: List of appointments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Appointment"
+
+  /appointments/{id}:
+    get:
+      operationId: getAppointment
+      tags: [appointments]
+      summary: Get appointment by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Appointment
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Appointment"
+        "404":
+          description: Not found
+
+    patch:
+      operationId: updateAppointment
+      tags: [appointments]
+      summary: Update appointment status
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AppointmentUpdate"
+      responses:
+        "200":
+          description: Updated appointment
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Appointment"
+
+  /consultations:
+    post:
+      operationId: submitConsultation
+      tags: [consultations]
+      summary: Submit a consultation intake form
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ConsultationInput"
+      responses:
+        "201":
+          description: Consultation request submitted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Consultation"
+        "400":
+          description: Invalid input
+
+    get:
+      operationId: listConsultations
+      tags: [consultations]
+      summary: List consultation requests
+      responses:
+        "200":
+          description: List of consultations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Consultation"
+
+  /newsletter:
+    post:
+      operationId: subscribeNewsletter
+      tags: [newsletter]
+      summary: Subscribe to newsletter
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NewsletterInput"
+      responses:
+        "201":
+          description: Subscribed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NewsletterSubscription"
+        "400":
+          description: Invalid input
+
+  /services:
+    get:
+      operationId: listServices
+      tags: [services]
+      summary: List all services offered
+      responses:
+        "200":
+          description: List of services
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Service"
+
+  /faq:
+    get:
+      operationId: listFaq
+      tags: [faq]
+      summary: Get frequently asked questions
+      responses:
+        "200":
+          description: List of FAQ items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/FaqItem"
+
+  /blog:
+    get:
+      operationId: listBlogPosts
+      tags: [blog]
+      summary: List blog posts and guides
+      responses:
+        "200":
+          description: List of blog posts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BlogPost"
+
+  /blog/{slug}:
+    get:
+      operationId: getBlogPost
+      tags: [blog]
+      summary: Get a blog post by slug
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Blog post
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BlogPost"
+        "404":
+          description: Not found
+
+  /stats:
+    get:
+      operationId: getStats
+      tags: [health]
+      summary: Get platform statistics summary
+      responses:
+        "200":
+          description: Platform stats
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlatformStats"
+
 components:
   schemas:
     HealthStatus:
@@ -34,3 +307,285 @@ components:
       required:
         - status
 
+    ContactInput:
+      type: object
+      required: [fullName, email, phone, subject, message]
+      properties:
+        fullName:
+          type: string
+          minLength: 2
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+        subject:
+          type: string
+        message:
+          type: string
+        callbackRequested:
+          type: boolean
+          default: false
+        preferredTime:
+          type: ["string", "null"]
+
+    ContactRequest:
+      type: object
+      required: [id, fullName, email, phone, subject, message, callbackRequested, createdAt]
+      properties:
+        id:
+          type: integer
+        fullName:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        subject:
+          type: string
+        message:
+          type: string
+        callbackRequested:
+          type: boolean
+        preferredTime:
+          type: ["string", "null"]
+        createdAt:
+          type: string
+          format: date-time
+
+    AppointmentInput:
+      type: object
+      required: [fullName, email, phone, consultationType, appointmentType, preferredDate, description]
+      properties:
+        fullName:
+          type: string
+          minLength: 2
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+        consultationType:
+          type: string
+          description: "Type of consultation needed (e.g. titre_sejour, renouvellement, vls_ts)"
+        appointmentType:
+          type: string
+          enum: [visioconference, telephone, presentiel]
+        preferredDate:
+          type: string
+          format: date
+        preferredTime:
+          type: string
+        description:
+          type: string
+        nationality:
+          type: ["string", "null"]
+        currentStatus:
+          type: ["string", "null"]
+
+    Appointment:
+      type: object
+      required: [id, fullName, email, phone, consultationType, appointmentType, preferredDate, status, createdAt]
+      properties:
+        id:
+          type: integer
+        fullName:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        consultationType:
+          type: string
+        appointmentType:
+          type: string
+        preferredDate:
+          type: string
+        preferredTime:
+          type: ["string", "null"]
+        description:
+          type: string
+        nationality:
+          type: ["string", "null"]
+        currentStatus:
+          type: ["string", "null"]
+        status:
+          type: string
+          enum: [pending, confirmed, completed, cancelled]
+        createdAt:
+          type: string
+          format: date-time
+
+    AppointmentUpdate:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [pending, confirmed, completed, cancelled]
+        preferredDate:
+          type: string
+        preferredTime:
+          type: string
+
+    ConsultationInput:
+      type: object
+      required: [fullName, email, phone, nationality, situationType, description]
+      properties:
+        fullName:
+          type: string
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+        nationality:
+          type: string
+        situationType:
+          type: string
+          description: "e.g. premiere_demande, renouvellement, regularisation, recours"
+        currentTitle:
+          type: ["string", "null"]
+        arrivalDate:
+          type: ["string", "null"]
+        description:
+          type: string
+        urgency:
+          type: string
+          enum: [normal, urgent, very_urgent]
+          default: normal
+
+    Consultation:
+      type: object
+      required: [id, fullName, email, phone, nationality, situationType, description, status, createdAt]
+      properties:
+        id:
+          type: integer
+        fullName:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        nationality:
+          type: string
+        situationType:
+          type: string
+        currentTitle:
+          type: ["string", "null"]
+        arrivalDate:
+          type: ["string", "null"]
+        description:
+          type: string
+        urgency:
+          type: string
+        status:
+          type: string
+          enum: [pending, in_review, completed]
+        createdAt:
+          type: string
+          format: date-time
+
+    NewsletterInput:
+      type: object
+      required: [email]
+      properties:
+        email:
+          type: string
+          format: email
+        fullName:
+          type: ["string", "null"]
+
+    NewsletterSubscription:
+      type: object
+      required: [id, email, createdAt]
+      properties:
+        id:
+          type: integer
+        email:
+          type: string
+        fullName:
+          type: ["string", "null"]
+        createdAt:
+          type: string
+          format: date-time
+
+    Service:
+      type: object
+      required: [id, title, description, category, icon]
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+        icon:
+          type: string
+        price:
+          type: ["string", "null"]
+        duration:
+          type: ["string", "null"]
+        featured:
+          type: boolean
+
+    FaqItem:
+      type: object
+      required: [id, question, answer, category]
+      properties:
+        id:
+          type: integer
+        question:
+          type: string
+        answer:
+          type: string
+        category:
+          type: string
+        order:
+          type: integer
+
+    BlogPost:
+      type: object
+      required: [id, title, slug, excerpt, content, category, publishedAt]
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        slug:
+          type: string
+        excerpt:
+          type: string
+        content:
+          type: string
+        category:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        imageUrl:
+          type: ["string", "null"]
+        publishedAt:
+          type: string
+          format: date-time
+        readingTime:
+          type: integer
+
+    PlatformStats:
+      type: object
+      required: [totalConsultations, totalAppointments, totalContactRequests, totalNewsletterSubscribers]
+      properties:
+        totalConsultations:
+          type: integer
+        totalAppointments:
+          type: integer
+        totalContactRequests:
+          type: integer
+        totalNewsletterSubscribers:
+          type: integer
+        pendingAppointments:
+          type: integer
+        completedConsultations:
+          type: integer

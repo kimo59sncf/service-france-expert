@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Service France Expert"
+version = "1.0.0"
+id = "artifacts/service-france-expert"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 23167
+
+[services.development]
+run = "pnpm --filter @workspace/service-france-expert run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/service-france-expert", "run", "build" ]
+publicDir = "artifacts/service-france-expert/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "23167"
+BASE_PATH = "/"

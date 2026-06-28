@@ -1,0 +1,20 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "wp1zfgoOpuJnZWzY7Qh8f"
+uri = "file://artifacts/service-france-expert/public/images/hero-bg.png"
+type = "image"
+title = "Parisian office interior"
+
+[[generated]]
+id = "2KlxK914OYG2VaWCI2KVj"
+uri = "file://artifacts/service-france-expert/public/images/consultation.png"
+type = "image"
+title = "Consultation desk"
+
+[[generated]]
+id = "EBFxmkVUJhOO-zB0b3isJ"
+uri = "file://artifacts/service-france-expert/public/images/paris-architecture.png"
+type = "image"
+title = "French architecture"
