@@ -22,17 +22,15 @@ export function Navbar() {
         <div className="flex justify-between h-20">
           <div className="flex items-center">
             <Link href="/" className="flex-shrink-0 flex items-center gap-3 group">
-              <img
-                src="/logo.jpg"
-                alt="Service France Expert"
-                className="h-16 w-16 object-contain object-center rounded-sm"
-              />
-              <div className="flex flex-col leading-tight">
-                <span className="font-serif font-bold text-lg text-primary group-hover:text-accent transition-colors">
-                  Service France Expert
+              <div className="w-10 h-10 bg-primary flex items-center justify-center rounded-sm">
+                <span className="text-white font-serif font-bold text-xl leading-none">SF</span>
+              </div>
+              <div className="flex flex-col">
+                <span className="font-serif font-semibold text-lg text-primary leading-tight group-hover:text-accent transition-colors">
+                  Service France
                 </span>
-                <span className="text-[11px] font-medium text-muted-foreground uppercase tracking-widest">
-                  Assistance Administrative
+                <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                  Expert
                 </span>
               </div>
             </Link>
