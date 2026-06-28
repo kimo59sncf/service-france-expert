@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { ArrowRight, FileText, Landmark, ShieldCheck, ChevronRight, HeartHandshake, Briefcase, Mail, Phone, AlertCircle } from "lucide-react";
+import { ArrowRight, FileText, Landmark, ShieldCheck, ChevronRight, HeartHandshake, Briefcase, Mail, Phone, AlertCircle, Search, Map, FolderOpen, Bell } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useListServices, useListBlogPosts, useSubscribeNewsletter } from "@workspace/api-client-react";
@@ -228,7 +228,7 @@ export default function Home() {
           <Landmark className="w-96 h-96" />
         </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center max-w-3xl mx-auto mb-16">
+          <div className="text-center max-w-3xl mx-auto mb-20">
             <h2 className="text-3xl md:text-4xl font-serif font-bold text-white mb-4">
               Notre méthodologie
             </h2>
@@ -237,34 +237,33 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div className="relative">
-              <div className="text-6xl font-serif font-bold text-white/10 absolute -top-6 -left-4">01</div>
-              <div className="relative z-10">
-                <h3 className="text-xl font-bold text-white mb-3">Diagnostic</h3>
-                <p className="text-primary-foreground/70">Analyse approfondie de votre situation personnelle et de votre éligibilité.</p>
-              </div>
-            </div>
-            <div className="relative">
-              <div className="text-6xl font-serif font-bold text-white/10 absolute -top-6 -left-4">02</div>
-              <div className="relative z-10">
-                <h3 className="text-xl font-bold text-white mb-3">Stratégie</h3>
-                <p className="text-primary-foreground/70">Définition de la procédure la plus adaptée et liste précise des pièces requises.</p>
-              </div>
-            </div>
-            <div className="relative">
-              <div className="text-6xl font-serif font-bold text-white/10 absolute -top-6 -left-4">03</div>
-              <div className="relative z-10">
-                <h3 className="text-xl font-bold text-white mb-3">Constitution</h3>
-                <p className="text-primary-foreground/70">Vérification, traduction et assemblage de votre dossier de manière exhaustive.</p>
-              </div>
-            </div>
-            <div className="relative">
-              <div className="text-6xl font-serif font-bold text-white/10 absolute -top-6 -left-4">04</div>
-              <div className="relative z-10">
-                <h3 className="text-xl font-bold text-white mb-3">Suivi</h3>
-                <p className="text-primary-foreground/70">Dépôt et communication avec l'administration jusqu'à l'obtention de votre titre.</p>
-              </div>
+          {/* Timeline steps */}
+          <div className="relative">
+            {/* Connecting line (desktop) */}
+            <div className="hidden md:block absolute top-10 left-[12.5%] right-[12.5%] h-0.5 bg-white/20" />
+
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
+              {[
+                { num: "01", icon: Search, title: "Diagnostic", desc: "Analyse approfondie de votre situation personnelle et de votre éligibilité." },
+                { num: "02", icon: Map, title: "Stratégie", desc: "Définition de la procédure la plus adaptée et liste précise des pièces requises." },
+                { num: "03", icon: FolderOpen, title: "Constitution", desc: "Vérification, traduction et assemblage de votre dossier de manière exhaustive." },
+                { num: "04", icon: Bell, title: "Suivi", desc: "Dépôt et communication avec l'administration jusqu'à l'obtention de votre titre." },
+              ].map(({ num, icon: Icon, title, desc }) => (
+                <div key={num} className="flex flex-col items-center text-center group">
+                  {/* Circle with icon */}
+                  <div className="relative mb-6">
+                    <div className="w-20 h-20 rounded-full bg-white/10 border-2 border-white/30 flex items-center justify-center group-hover:bg-accent group-hover:border-accent transition-all duration-300 relative z-10">
+                      <Icon className="w-8 h-8 text-white" />
+                    </div>
+                    <span className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-accent text-white text-xs font-bold flex items-center justify-center z-20">
+                      {num.replace("0", "")}
+                    </span>
+                  </div>
+                  {/* Content */}
+                  <h3 className="text-lg font-bold text-white mb-2">{title}</h3>
+                  <p className="text-primary-foreground/70 text-sm leading-relaxed">{desc}</p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
