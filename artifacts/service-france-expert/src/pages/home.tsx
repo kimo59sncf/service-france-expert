@@ -61,7 +61,7 @@ export default function Home() {
         
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white w-full">
           <div className="max-w-3xl animate-in fade-in slide-in-from-bottom-8 duration-1000 fill-mode-both">
-            <span className="inline-block py-1 px-3 rounded-full bg-red-600/30 backdrop-blur-md border border-red-500/60 text-sm font-medium tracking-wide uppercase mb-6 text-red-300">
+            <span className="inline-block py-1 px-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-sm font-medium tracking-wide uppercase mb-6 text-red-400">
               Cabinet d'accompagnement premium
             </span>
             <h1 className="text-5xl sm:text-6xl md:text-7xl font-serif font-bold leading-tight mb-8">
