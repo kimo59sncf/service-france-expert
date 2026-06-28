@@ -62,13 +62,13 @@ export default function Home() {
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white w-full">
           <div className="max-w-3xl animate-in fade-in slide-in-from-bottom-8 duration-1000 fill-mode-both">
             <span className="inline-block py-1 px-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-sm font-medium tracking-wide uppercase mb-6">
-              Cabinet d'accompagnement premium
+              Société privée — Assistance administrative indépendante
             </span>
             <h1 className="text-5xl sm:text-6xl md:text-7xl font-serif font-bold leading-tight mb-8">
-              L'excellence au service de vos démarches en France.
+              Un accompagnement expert pour vos démarches administratives en France.
             </h1>
             <p className="text-xl md:text-2xl text-white/90 mb-10 leading-relaxed font-light">
-              Votre expert dédié pour naviguer avec sérénité dans la complexité de l'administration française.
+              Nous vous aidons à préparer et constituer vos dossiers de titre de séjour auprès des préfectures, avec rigueur et transparence.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4">
