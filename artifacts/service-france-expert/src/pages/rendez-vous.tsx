@@ -9,13 +9,11 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
-import { CalendarIcon, Clock, Video, Phone, MapPin } from "lucide-react";
+import { CalendarIcon, Clock, Phone } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const formSchema = z.object({
@@ -23,7 +21,7 @@ const formSchema = z.object({
   email: z.string().email("Email invalide"),
   phone: z.string().min(10, "Téléphone requis"),
   consultationType: z.string().min(1, "Veuillez sélectionner un motif"),
-  appointmentType: z.enum(["visioconference", "telephone", "presentiel"]),
+  appointmentType: z.literal("telephone"),
   preferredDate: z.date({
     required_error: "Veuillez sélectionner une date",
   }),
@@ -51,7 +49,7 @@ export default function RendezVous() {
       email: "",
       phone: "",
       consultationType: selectedService?.title || "",
-      appointmentType: "visioconference",
+      appointmentType: "telephone",
       description: "",
     },
   });
@@ -109,68 +107,23 @@ export default function RendezVous() {
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10">
               
-              {/* Type de rendez-vous */}
-              <div className="space-y-6">
-                <div>
-                  <h2 className="text-xl font-serif font-bold text-primary border-b border-border pb-2 mb-6">1. Format du rendez-vous</h2>
+              {/* Info consultation téléphonique */}
+              <div className="flex items-start gap-4 p-5 bg-primary/5 border border-primary/20 rounded-sm">
+                <div className="w-10 h-10 bg-primary flex items-center justify-center rounded-sm shrink-0">
+                  <Phone className="w-5 h-5 text-white" />
                 </div>
-                
-                <FormField
-                  control={form.control}
-                  name="appointmentType"
-                  render={({ field }) => (
-                    <FormItem className="space-y-3">
-                      <FormControl>
-                        <RadioGroup
-                          onValueChange={field.onChange}
-                          defaultValue={field.value}
-                          className="grid grid-cols-1 md:grid-cols-3 gap-4"
-                        >
-                          <div>
-                            <RadioGroupItem value="visioconference" id="visio" className="peer sr-only" />
-                            <Label
-                              htmlFor="visio"
-                              className="flex flex-col items-center justify-center p-6 bg-white border-2 border-border rounded-sm cursor-pointer hover:bg-muted/50 peer-data-[state=checked]:border-accent peer-data-[state=checked]:bg-accent/5 transition-all"
-                            >
-                              <Video className="w-8 h-8 mb-3 text-primary" />
-                              <span className="font-semibold text-primary">Visioconférence</span>
-                              <span className="text-xs text-muted-foreground mt-1 text-center">Google Meet / Zoom</span>
-                            </Label>
-                          </div>
-                          <div>
-                            <RadioGroupItem value="telephone" id="tel" className="peer sr-only" />
-                            <Label
-                              htmlFor="tel"
-                              className="flex flex-col items-center justify-center p-6 bg-white border-2 border-border rounded-sm cursor-pointer hover:bg-muted/50 peer-data-[state=checked]:border-accent peer-data-[state=checked]:bg-accent/5 transition-all"
-                            >
-                              <Phone className="w-8 h-8 mb-3 text-primary" />
-                              <span className="font-semibold text-primary">Téléphone</span>
-                              <span className="text-xs text-muted-foreground mt-1 text-center">Appel direct</span>
-                            </Label>
-                          </div>
-                          <div>
-                            <RadioGroupItem value="presentiel" id="cabinet" className="peer sr-only" />
-                            <Label
-                              htmlFor="cabinet"
-                              className="flex flex-col items-center justify-center p-6 bg-white border-2 border-border rounded-sm cursor-pointer hover:bg-muted/50 peer-data-[state=checked]:border-accent peer-data-[state=checked]:bg-accent/5 transition-all"
-                            >
-                              <MapPin className="w-8 h-8 mb-3 text-primary" />
-                              <span className="font-semibold text-primary">En Cabinet</span>
-                              <span className="text-xs text-muted-foreground mt-1 text-center">Paris 8ème</span>
-                            </Label>
-                          </div>
-                        </RadioGroup>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                <div>
+                  <p className="font-semibold text-primary">Consultation par téléphone</p>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Toutes nos consultations se déroulent par téléphone. Un conseiller vous appellera au numéro indiqué, à la date et l'heure choisies. Le suivi de votre dossier s'effectue ensuite par email, SMS et téléphone.
+                  </p>
+                </div>
               </div>
 
               {/* Motif */}
               <div className="space-y-6">
                 <div>
-                  <h2 className="text-xl font-serif font-bold text-primary border-b border-border pb-2 mb-6">2. Motif de la consultation</h2>
+                  <h2 className="text-xl font-serif font-bold text-primary border-b border-border pb-2 mb-6">1. Motif de la consultation</h2>
                 </div>
                 
                 <FormField
@@ -220,7 +173,7 @@ export default function RendezVous() {
               {/* Date & Heure */}
               <div className="space-y-6">
                 <div>
-                  <h2 className="text-xl font-serif font-bold text-primary border-b border-border pb-2 mb-6">3. Date & Horaires</h2>
+                  <h2 className="text-xl font-serif font-bold text-primary border-b border-border pb-2 mb-6">2. Date & Horaires</h2>
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -302,7 +255,7 @@ export default function RendezVous() {
               {/* Coordonnées */}
               <div className="space-y-6">
                 <div>
-                  <h2 className="text-xl font-serif font-bold text-primary border-b border-border pb-2 mb-6">4. Vos coordonnées</h2>
+                  <h2 className="text-xl font-serif font-bold text-primary border-b border-border pb-2 mb-6">3. Vos coordonnées</h2>
                 </div>
                 
                 <FormField

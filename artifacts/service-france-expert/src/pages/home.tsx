@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { ArrowRight, FileText, Landmark, ShieldCheck, ChevronRight, HeartHandshake, Briefcase, Mail, Phone, Video, MapPin, AlertCircle } from "lucide-react";
+import { ArrowRight, FileText, Landmark, ShieldCheck, ChevronRight, HeartHandshake, Briefcase, Mail, Phone, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useListServices, useListBlogPosts, useSubscribeNewsletter } from "@workspace/api-client-react";
@@ -93,29 +93,29 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="flex items-center gap-4 p-4">
               <div className="w-12 h-12 bg-primary/5 rounded-sm flex items-center justify-center shrink-0">
-                <Video className="w-6 h-6 text-primary" />
-              </div>
-              <div>
-                <p className="font-bold text-primary">Visioconférence</p>
-                <p className="text-sm text-muted-foreground">Consultation à distance sécurisée, depuis chez vous</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-4 p-4">
-              <div className="w-12 h-12 bg-primary/5 rounded-sm flex items-center justify-center shrink-0">
                 <Phone className="w-6 h-6 text-primary" />
               </div>
               <div>
-                <p className="font-bold text-primary">Par téléphone</p>
-                <p className="text-sm text-muted-foreground">Un conseiller disponible pour répondre à vos questions</p>
+                <p className="font-bold text-primary">Consultation par téléphone</p>
+                <p className="text-sm text-muted-foreground">Échangez directement avec un conseiller expert</p>
               </div>
             </div>
             <div className="flex items-center gap-4 p-4">
               <div className="w-12 h-12 bg-primary/5 rounded-sm flex items-center justify-center shrink-0">
-                <MapPin className="w-6 h-6 text-primary" />
+                <Mail className="w-6 h-6 text-primary" />
               </div>
               <div>
-                <p className="font-bold text-primary">En présentiel</p>
-                <p className="text-sm text-muted-foreground">Rendez-vous en cabinet pour un suivi personnalisé</p>
+                <p className="font-bold text-primary">Suivi par email</p>
+                <p className="text-sm text-muted-foreground">Compte rendu et échanges écrits sécurisés</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-4 p-4">
+              <div className="w-12 h-12 bg-primary/5 rounded-sm flex items-center justify-center shrink-0">
+                <Phone className="w-6 h-6 text-accent" />
+              </div>
+              <div>
+                <p className="font-bold text-primary">Suivi SMS & téléphone</p>
+                <p className="text-sm text-muted-foreground">Notifications et mises à jour tout au long de la procédure</p>
               </div>
             </div>
           </div>
