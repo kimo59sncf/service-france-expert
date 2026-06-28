@@ -21,12 +21,20 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-20">
           <div className="flex items-center">
-            <Link href="/" className="flex-shrink-0 flex items-center group">
+            <Link href="/" className="flex-shrink-0 flex items-center gap-3 group">
               <img
                 src="/logo.jpg"
                 alt="Service France Expert"
-                className="h-14 w-auto object-contain"
+                className="h-16 w-16 object-contain object-center rounded-sm"
               />
+              <div className="flex flex-col leading-tight">
+                <span className="font-serif font-bold text-lg text-primary group-hover:text-accent transition-colors">
+                  Service France Expert
+                </span>
+                <span className="text-[11px] font-medium text-muted-foreground uppercase tracking-widest">
+                  Assistance Administrative
+                </span>
+              </div>
             </Link>
           </div>
           
