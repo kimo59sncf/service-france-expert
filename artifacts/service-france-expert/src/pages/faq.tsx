@@ -1,5 +1,10 @@
 import { useListFaq } from "@workspace/api-client-react";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { Skeleton } from "@/components/ui/skeleton";
 import { HelpCircle, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -8,7 +13,7 @@ import { Link } from "wouter";
 export default function Faq() {
   const { data: faqs, isLoading } = useListFaq();
 
-  const categories = faqs
+  const categories = Array.isArray(faqs)
     ? Array.from(new Set(faqs.map((f) => f.category)))
     : [];
 
@@ -26,7 +31,8 @@ export default function Faq() {
             Questions Fréquentes
           </h1>
           <p className="text-xl text-primary-foreground/80 font-light leading-relaxed">
-            Retrouvez les réponses aux questions les plus courantes sur nos services et l'administration française.
+            Retrouvez les réponses aux questions les plus courantes sur nos
+            services et l'administration française.
           </p>
         </div>
       </section>
@@ -50,11 +56,15 @@ export default function Faq() {
                   {category}
                 </h2>
                 <Accordion type="single" collapsible className="w-full">
-                  {faqs
-                    ?.filter((f) => f.category === category)
+                  {(Array.isArray(faqs) ? faqs : [])
+                    .filter((f) => f.category === category)
                     .sort((a, b) => (a.order || 0) - (b.order || 0))
                     .map((faq) => (
-                      <AccordionItem key={faq.id} value={`faq-${faq.id}`} className="border-b border-border">
+                      <AccordionItem
+                        key={faq.id}
+                        value={`faq-${faq.id}`}
+                        className="border-b border-border"
+                      >
                         <AccordionTrigger className="text-left font-medium text-foreground hover:text-primary py-4 px-2 hover:bg-muted/30 rounded-sm transition-all data-[state=open]:text-primary">
                           {faq.question}
                         </AccordionTrigger>
@@ -80,11 +90,15 @@ export default function Faq() {
             Vous n'avez pas trouvé votre réponse ?
           </h2>
           <p className="text-muted-foreground mb-8 max-w-xl mx-auto">
-            Notre équipe est à votre disposition pour répondre à toutes vos interrogations spécifiques.
+            Notre équipe est à votre disposition pour répondre à toutes vos
+            interrogations spécifiques.
           </p>
           <div className="flex justify-center gap-4 flex-col sm:flex-row">
             <Link href="/contact">
-              <Button size="lg" className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-white">
+              <Button
+                size="lg"
+                className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-white"
+              >
                 Nous contacter
               </Button>
             </Link>

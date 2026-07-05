@@ -68,8 +68,9 @@ function AdminContent() {
   }, []);
 
   const filteredLeads = useMemo(() => {
-    if (filter === "all") return leads;
-    return leads.filter((lead) => lead.status === filter);
+    const arr = Array.isArray(leads) ? leads : [];
+    if (filter === "all") return arr;
+    return arr.filter((lead) => lead.status === filter);
   }, [filter, leads]);
 
   const updateLead = async (leadId: number, updates: Partial<Lead>) => {
@@ -145,9 +146,23 @@ function AdminContent() {
             <CardContent>
               <div className="text-3xl font-bold text-primary">
                 {
-                  leads.filter(
+                  (Array.isArray(leads) ? leads : []).filter(
                     (lead) =>
                       lead.status !== "client" && lead.status !== "archive",
+                  ).length
+                }
+              </div>
+              <div className="text-3xl font-bold text-accent">
+                {
+                  (Array.isArray(leads) ? leads : []).filter(
+                    (lead) => lead.isClient,
+                  ).length
+                }
+              </div>
+              <div className="text-3xl font-bold text-primary">
+                {
+                  (Array.isArray(leads) ? leads : []).filter(
+                    (lead) => lead.status === "rdv_pris",
                   ).length
                 }
               </div>
