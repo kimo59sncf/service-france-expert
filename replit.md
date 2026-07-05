@@ -38,3 +38,27 @@ Application d'accompagnement administratif pour les démarches de titre de séjo
 - Le projet utilise actuellement un stockage JSON local (`artifacts/api-server/data/leads.json`)
 - Pour passer à PostgreSQL : configurer DATABASE_URL et adapter `local-store.ts`
 - pnpm requis pour l'installation des dépendances
+
+## Production Deployment (serveur)
+
+```bash
+cd ~/franceserviceexpert.fr
+export PATH="$HOME/bin:$PATH"
+export PORT=4173
+export BASE_PATH=/
+pnpm run build
+```
+
+Puis démarrer les services :
+
+```bash
+# API
+cd artifacts/api-server
+node dist/index.mjs
+
+# Frontend (servir les fichiers statiques)
+cd artifacts/service-france-expert
+npx vite preview --host 0.0.0.0
+```
+
+Ou avec Docker : `docker-compose up -d`
