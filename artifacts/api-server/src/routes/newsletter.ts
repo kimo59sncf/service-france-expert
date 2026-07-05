@@ -1,7 +1,6 @@
 import { Router } from "express";
-import { db } from "@workspace/db";
-import { newsletterTable } from "@workspace/db";
 import { SubscribeNewsletterBody } from "@workspace/api-zod";
+import { createLead } from "../lib/local-store";
 
 const router = Router();
 
@@ -11,22 +10,18 @@ router.post("/newsletter", async (req, res) => {
     res.status(400).json({ error: "Invalid input" });
     return;
   }
+
   const data = parsed.data;
-  try {
-    const [sub] = await db
-      .insert(newsletterTable)
-      .values({
-        email: data.email,
-        fullName: data.fullName ?? null,
-      })
-      .returning();
-    res.status(201).json({
-      ...sub,
-      createdAt: sub.createdAt.toISOString(),
-    });
-  } catch {
-    res.status(400).json({ error: "Email already subscribed" });
-  }
+  const lead = await createLead({
+    source: "newsletter",
+    type: "Newsletter",
+    fullName: data.fullName ?? "Abonné newsletter",
+    email: data.email,
+    notes: "Inscription à la newsletter locale.",
+    metadata: { source: "homepage" },
+  });
+
+  res.status(201).json({ id: lead.id, email: lead.email, createdAt: lead.createdAt });
 });
 
 export default router;

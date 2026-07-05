@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
+import { Seo } from "@/components/seo";
 
 const formSchema = z.object({
   fullName: z.string().min(2, "Le nom doit contenir au moins 2 caractères"),
@@ -63,6 +64,12 @@ export default function Contact() {
 
   return (
     <div className="pt-8 pb-24">
+      <Seo
+        title="Contact expert administratif"
+        description="Contactez Service France Expert pour un accompagnement fiable des démarches administratives en France, avec prise de rendez-vous rapide."
+        path="/contact"
+        type="localBusiness"
+      />
       {/* Header */}
       <section className="bg-primary text-primary-foreground py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto text-center">
@@ -87,10 +94,10 @@ export default function Contact() {
                     <MapPin className="w-5 h-5 text-accent" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-primary mb-1">Cabinet de Paris</h3>
+                    <h3 className="font-semibold text-primary mb-1">Cabinet de lille  </h3>
                     <p className="text-muted-foreground text-sm">
-                      12 Avenue des Champs-Élysées<br />
-                      75008 Paris, France
+                      89 rue de la plaine<br />
+                      59000 Lille, France
                     </p>
                   </div>
                 </div>
@@ -102,7 +109,7 @@ export default function Contact() {
                   <div>
                     <h3 className="font-semibold text-primary mb-1">Téléphone</h3>
                     <p className="text-muted-foreground text-sm">
-                      +33 (0)1 40 00 00 00
+                      +33 (0)1 87 66 68 79
                     </p>
                   </div>
                 </div>
@@ -140,7 +147,7 @@ export default function Contact() {
                 Pour toute urgence (OQTF, placement en rétention), une ligne dédiée est disponible pour nos clients.
               </p>
               <p className="text-sm font-medium text-accent">
-                Urgences : +33 (0)6 00 00 00 00
+                Urgences : +33 (0)7 63 34 93 11
               </p>
             </div>
           </div>

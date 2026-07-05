@@ -1,45 +1,40 @@
-# [Project name]
+# Service France Expert
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+Application d'accompagnement administratif pour les démarches de titre de séjour, naturalisation et régularisation en France.
 
 ## Run & Operate
 
 - `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
+- `pnpm --filter @workspace/service-france-expert run dev` — run frontend (port 5173)
 - `pnpm run typecheck` — full typecheck across all packages
 - `pnpm run build` — typecheck + build all packages
-- `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
-- `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
-- Required env: `DATABASE_URL` — Postgres connection string
 
 ## Stack
 
-- pnpm workspaces, Node.js 24, TypeScript 5.9
+- pnpm workspaces, Node.js 20, TypeScript 5.9
 - API: Express 5
-- DB: PostgreSQL + Drizzle ORM
-- Validation: Zod (`zod/v4`), `drizzle-zod`
-- API codegen: Orval (from OpenAPI spec)
-- Build: esbuild (CJS bundle)
+- Frontend: React 18 + Vite
+- UI: TailwindCSS + Radix UI
+- DB: PostgreSQL + Drizzle ORM (optionnel, stockage JSON local actuellement)
+- Validation: Zod, React Hook Form
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
-
-## Architecture decisions
-
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- `artifacts/api-server/` — Backend API Express
+- `artifacts/api-server/src/routes/` — Endpoints API (services, faq, leads)
+- `artifacts/api-server/src/lib/local-store.ts` — Stockage JSON local des leads
+- `artifacts/service-france-expert/src/pages/` — Pages frontend (services.tsx, faq.tsx, home.tsx, etc.)
+- `lib/db/src/schema/` — Schémas Drizzle ORM
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
-
-## User preferences
-
-_Populate as you build — explicit user instructions worth remembering across sessions._
+- Présentation des services d'accompagnement administratif
+- FAQ détaillée sur titres de séjour, naturalisation, régularisation
+- Formulaire de contact et prise de rendez-vous
+- Gestion des leads (formulaires)
 
 ## Gotchas
 
-_Populate as you build — sharp edges, "always run X before Y" rules._
-
-## Pointers
-
-- See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and package details
+- Le projet utilise actuellement un stockage JSON local (`artifacts/api-server/data/leads.json`)
+- Pour passer à PostgreSQL : configurer DATABASE_URL et adapter `local-store.ts`
+- pnpm requis pour l'installation des dépendances

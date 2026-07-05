@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { FileText, ArrowRight, ShieldCheck, Clock, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Seo } from "@/components/seo";
 
 export default function Services() {
   const { data: services, isLoading } = useListServices();
@@ -13,6 +14,12 @@ export default function Services() {
 
   return (
     <div className="pt-8 pb-24">
+      <Seo
+        title="Services d'accompagnement administratif"
+        description="Découvrez les services premium de Service France Expert pour les démarches administratives, titres de séjour et suivis de dossier."
+        path="/services"
+        type="localBusiness"
+      />
       {/* Header */}
       <section className="bg-primary text-primary-foreground py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto text-center">

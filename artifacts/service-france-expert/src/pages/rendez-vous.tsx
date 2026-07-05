@@ -15,6 +15,7 @@ import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { CalendarIcon, Clock, Phone } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Seo } from "@/components/seo";
 
 const formSchema = z.object({
   fullName: z.string().min(2, "Nom requis"),
@@ -90,6 +91,12 @@ export default function RendezVous() {
 
   return (
     <div className="min-h-screen bg-muted/20 pb-24">
+      <Seo
+        title="Prendre rendez-vous"
+        description="Réservez un rendez-vous téléphonique avec Service France Expert pour un accompagnement administratif local et efficace."
+        path="/rendez-vous"
+        type="localBusiness"
+      />
       {/* Header */}
       <div className="bg-primary text-primary-foreground py-16 px-4">
         <div className="max-w-3xl mx-auto text-center">

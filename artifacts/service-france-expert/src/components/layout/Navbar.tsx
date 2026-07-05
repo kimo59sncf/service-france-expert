@@ -21,7 +21,10 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-24">
           <div className="flex items-center">
-            <Link href="/" className="flex-shrink-0 flex items-center gap-3 group">
+            <Link
+              href="/"
+              className="flex-shrink-0 flex items-center gap-3 group"
+            >
               <img
                 src="/logo-client.png"
                 alt="Service France Expert"
@@ -37,7 +40,7 @@ export function Navbar() {
               </div>
             </Link>
           </div>
-          
+
           <div className="hidden md:flex items-center justify-end space-x-8">
             <div className="flex space-x-6">
               {navigation.map((item) => {
@@ -47,8 +50,8 @@ export function Navbar() {
                     key={item.name}
                     href={item.href}
                     className={`inline-flex items-center px-1 pt-1 text-sm font-medium transition-colors ${
-                      isActive 
-                        ? "text-accent border-b-2 border-accent" 
+                      isActive
+                        ? "text-accent border-b-2 border-accent"
                         : "text-foreground hover:text-accent border-b-2 border-transparent"
                     }`}
                   >
@@ -60,7 +63,7 @@ export function Navbar() {
             <div className="flex items-center space-x-4">
               <div className="hidden lg:flex items-center text-sm font-medium text-muted-foreground">
                 <Phone className="w-4 h-4 mr-2" />
-                <span>01 40 00 00 00</span>
+                <span>01 87 66 68 79</span>
               </div>
               <Link href="/rendez-vous" className="inline-flex">
                 <Button className="bg-accent hover:bg-accent/90 text-white rounded-sm font-medium transition-all shadow-sm">
@@ -70,7 +73,7 @@ export function Navbar() {
               </Link>
             </div>
           </div>
-          
+
           <div className="flex items-center md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
@@ -111,9 +114,13 @@ export function Navbar() {
           <div className="pt-4 pb-6 border-t border-border px-4 space-y-4">
             <div className="flex items-center text-sm font-medium text-muted-foreground">
               <Phone className="w-4 h-4 mr-2" />
-              <span>01 40 00 00 00</span>
+              <span>01 87 66 68 79</span>
             </div>
-            <Link href="/rendez-vous" onClick={() => setIsOpen(false)} className="block w-full">
+            <Link
+              href="/rendez-vous"
+              onClick={() => setIsOpen(false)}
+              className="block w-full"
+            >
               <Button className="w-full bg-accent hover:bg-accent/90 text-white rounded-sm font-medium shadow-sm justify-center">
                 Prendre rendez-vous
               </Button>

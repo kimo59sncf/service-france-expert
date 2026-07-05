@@ -51,13 +51,13 @@ export function Footer() {
               <li className="flex items-start">
                 <MapPin className="w-5 h-5 mr-3 text-accent shrink-0 mt-0.5" />
                 <span>
-                  12 Avenue des Champs-Élysées<br />
-                  75008 Paris, France
+                  89 rue de la plaine<br />
+                  59000 Lille, France
                 </span>
               </li>
               <li className="flex items-center">
                 <Phone className="w-5 h-5 mr-3 text-accent shrink-0" />
-                <span>+33 (0)1 40 00 00 00</span>
+                <span>+33 (0)1 87 66 68 79</span>
               </li>
               <li className="flex items-center">
                 <Mail className="w-5 h-5 mr-3 text-accent shrink-0" />

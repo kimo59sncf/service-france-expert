@@ -8,6 +8,7 @@ import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
+import { Seo } from "@/components/seo";
 
 export default function Home() {
   const { data: services, isLoading: servicesLoading } = useListServices();
@@ -47,6 +48,12 @@ export default function Home() {
 
   return (
     <div className="flex flex-col">
+      <Seo
+        title="Titre de séjour en France | Accompagnement expert"
+        description="Vous cherchez un accompagnement fiable pour votre titre de séjour en France ? Nous vous aidons à préparer un dossier solide, clair et conforme."
+        path="/"
+        type="localBusiness"
+      />
       {/* Hero Section */}
       <section className="relative min-h-[90vh] flex items-center pt-20 pb-32">
         <div className="absolute inset-0 z-0">
@@ -62,24 +69,24 @@ export default function Home() {
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white w-full">
           <div className="max-w-3xl animate-in fade-in slide-in-from-bottom-8 duration-1000 fill-mode-both">
             <span className="inline-block py-1 px-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-sm font-medium tracking-wide uppercase mb-6 text-amber-400">
-              Cabinet d'accompagnement premium
+              Accompagnement premium pour titres de séjour
             </span>
             <h1 className="text-5xl sm:text-6xl md:text-7xl font-serif font-bold leading-tight mb-8">
-              Un accompagnement expert pour vos démarches administratives en France.
+              Obtenir votre titre de séjour en France, sans stress, sans erreur, sans perdre de temps.
             </h1>
             <p className="text-xl md:text-2xl text-white/90 mb-10 leading-relaxed font-light">
-              Nous vous aidons à préparer et constituer vos dossiers de titre de séjour auprès des préfectures, avec rigueur et transparence.
+              Vous êtes perdu face aux démarches, aux pièces à fournir ou au risque d’un refus ? Nous vous aidons à construire un dossier solide, clair et conforme pour avancer sereinement.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4">
               <Link href="/consultation">
                 <Button size="lg" className="w-full sm:w-auto text-base h-14 px-8 bg-accent hover:bg-accent/90 text-white rounded-sm shadow-xl shadow-accent/20">
-                  Réserver une consultation
+                  Obtenir un accompagnement
                 </Button>
               </Link>
               <Link href="/services">
                 <Button size="lg" variant="outline" className="w-full sm:w-auto text-base h-14 px-8 bg-white/10 hover:bg-white/20 text-white border-white/30 rounded-sm backdrop-blur-sm">
-                  Découvrir nos services
+                  Voir nos services
                 </Button>
               </Link>
             </div>
@@ -171,10 +178,10 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary mb-4">
-              Une expertise pointue pour chaque situation
+              Des services concrets pour les situations qui bloquent
             </h2>
             <p className="text-lg text-muted-foreground">
-              Que vous soyez étudiant, professionnel, investisseur ou que vous souhaitiez rejoindre votre famille, nous vous accompagnons sur mesure.
+              Que vous soyez étudiant, salarié, famille ou entrepreneur, nous vous aidons à sortir d’un dossier compliqué et à reprendre votre projet en main.
             </p>
           </div>
 

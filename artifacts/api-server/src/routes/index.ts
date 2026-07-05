@@ -8,6 +8,7 @@ import servicesRouter from "./services";
 import faqRouter from "./faq";
 import blogRouter from "./blog";
 import statsRouter from "./stats";
+import leadsRouter from "./leads";
 
 const router: IRouter = Router();
 
@@ -20,5 +21,6 @@ router.use(servicesRouter);
 router.use(faqRouter);
 router.use(blogRouter);
 router.use(statsRouter);
+router.use(leadsRouter);
 
 export default router;

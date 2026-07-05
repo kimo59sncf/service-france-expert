@@ -1,7 +1,6 @@
 import { Router } from "express";
-import { db } from "@workspace/db";
-import { consultationsTable } from "@workspace/db";
 import { SubmitConsultationBody } from "@workspace/api-zod";
+import { createLead } from "../lib/local-store";
 
 const router = Router();
 
@@ -11,33 +10,36 @@ router.post("/consultations", async (req, res) => {
     res.status(400).json({ error: "Invalid input" });
     return;
   }
+
   const data = parsed.data;
-  const [consultation] = await db
-    .insert(consultationsTable)
-    .values({
-      fullName: data.fullName,
-      email: data.email,
-      phone: data.phone,
+  const lead = await createLead({
+    source: "consultation",
+    type: "Consultation juridique",
+    fullName: data.fullName,
+    email: data.email,
+    phone: data.phone,
+    subject: data.situationType,
+    message: data.description,
+    metadata: {
       nationality: data.nationality,
-      situationType: data.situationType,
       currentTitle: data.currentTitle ?? null,
       arrivalDate: data.arrivalDate ?? null,
-      description: data.description,
       urgency: data.urgency ?? "normal",
-      status: "pending",
-    })
-    .returning();
+    },
+  });
+
   res.status(201).json({
-    ...consultation,
-    createdAt: consultation.createdAt.toISOString(),
+    id: lead.id,
+    fullName: lead.fullName,
+    email: lead.email,
+    phone: lead.phone,
+    createdAt: lead.createdAt,
+    leadId: lead.id,
   });
 });
 
 router.get("/consultations", async (_req, res) => {
-  const consultations = await db.select().from(consultationsTable);
-  res.json(
-    consultations.map((c) => ({ ...c, createdAt: c.createdAt.toISOString() }))
-  );
+  res.json([]);
 });
 
 export default router;

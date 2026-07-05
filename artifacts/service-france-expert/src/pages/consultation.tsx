@@ -13,6 +13,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { AlertCircle, CheckCircle2, ChevronRight, ChevronLeft, ShieldCheck } from "lucide-react";
+import { Seo } from "@/components/seo";
 
 const STEPS = 3;
 
@@ -99,6 +100,12 @@ export default function Consultation() {
 
   return (
     <div className="min-h-screen bg-muted/20 pb-24">
+      <Seo
+        title="Consultation administrative premium"
+        description="Obtenez une consultation claire et professionnelle pour préparer votre dossier administratif ou votre demande de titre de séjour."
+        path="/consultation"
+        type="localBusiness"
+      />
       {/* Header */}
       <div className="bg-primary text-primary-foreground py-16 px-4">
         <div className="max-w-3xl mx-auto text-center">

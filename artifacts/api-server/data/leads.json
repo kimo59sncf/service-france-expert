@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "source": "contact",
+    "type": "Demande de contact",
+    "fullName": "Test Local",
+    "email": "test@example.com",
+    "phone": "0123456789",
+    "subject": "Test local",
+    "message": "Ceci est un test de saisie de lead local",
+    "status": "nouveau",
+    "priority": "moyenne",
+    "nextStep": "Appeler dans la journée",
+    "notes": "Lead capturé depuis le formulaire local.",
+    "isClient": false,
+    "metadata": {
+      "callbackRequested": true,
+      "preferredTime": "matin"
+    },
+    "createdAt": "2026-07-03T18:40:53.012Z",
+    "updatedAt": "2026-07-04T16:44:34.348Z"
+  }
+]
