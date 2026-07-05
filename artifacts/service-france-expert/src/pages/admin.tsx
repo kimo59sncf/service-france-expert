@@ -57,10 +57,19 @@ function AdminContent() {
 
   const fetchLeads = async () => {
     setLoading(true);
-    const response = await fetch("/api/leads");
-    const data = await response.json();
-    setLeads(data);
-    setLoading(false);
+    try {
+      const response = await fetch("/api/leads");
+      if (!response.ok) {
+        setLeads([]);
+        return;
+      }
+      const data = await response.json();
+      setLeads(Array.isArray(data) ? data : []);
+    } catch {
+      setLeads([]);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -174,7 +183,11 @@ function AdminContent() {
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold text-accent">
-                {leads.filter((lead) => lead.isClient).length}
+                {
+                  (Array.isArray(leads) ? leads : []).filter(
+                    (lead) => lead.isClient,
+                  ).length
+                }
               </div>
             </CardContent>
           </Card>
@@ -184,7 +197,11 @@ function AdminContent() {
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold text-primary">
-                {leads.filter((lead) => lead.status === "rdv_pris").length}
+                {
+                  (Array.isArray(leads) ? leads : []).filter(
+                    (lead) => lead.status === "rdv_pris",
+                  ).length
+                }
               </div>
             </CardContent>
           </Card>
