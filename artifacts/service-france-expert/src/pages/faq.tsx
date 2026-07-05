@@ -1,4 +1,3 @@
-import { useListFaq } from "@workspace/api-client-react";
 import {
   Accordion,
   AccordionContent,
@@ -9,9 +8,11 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { HelpCircle, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
+import { staticFaq } from "@/data/static-data";
 
 export default function Faq() {
-  const { data: faqs, isLoading } = useListFaq();
+  const faqs = staticFaq;
+  const isLoading = false;
 
   const categories = Array.isArray(faqs)
     ? Array.from(new Set(faqs.map((f) => f.category)))

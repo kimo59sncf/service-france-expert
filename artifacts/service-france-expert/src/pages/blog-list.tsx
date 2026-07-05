@@ -1,12 +1,13 @@
-import { useListBlogPosts } from "@workspace/api-client-react";
 import { Link } from "wouter";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Calendar, Clock, ArrowRight } from "lucide-react";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
+import { staticBlogPosts } from "@/data/static-data";
 
 export default function BlogList() {
-  const { data: posts, isLoading } = useListBlogPosts();
+  const posts = staticBlogPosts;
+  const isLoading = false;
 
   return (
     <div className="pt-8 pb-24">

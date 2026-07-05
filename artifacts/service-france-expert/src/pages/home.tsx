@@ -17,55 +17,36 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  useListServices,
-  useListBlogPosts,
-  useSubscribeNewsletter,
-} from "@workspace/api-client-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { Seo } from "@/components/seo";
+import { staticServices, staticBlogPosts } from "@/data/static-data";
 
 export default function Home() {
-  const { data: services, isLoading: servicesLoading } = useListServices();
-  const { data: blogPosts, isLoading: blogLoading } = useListBlogPosts();
-  const subscribeNewsletter = useSubscribeNewsletter();
   const { toast } = useToast();
 
   const [email, setEmail] = useState("");
 
-  const featuredServices =
-    (Array.isArray(services) ? services : [])
-      .filter((s) => s.featured)
-      .slice(0, 3) || [];
-  const recentPosts = blogPosts?.slice(0, 3) || [];
+  const services = staticServices;
+  const blogPosts = staticBlogPosts;
+  const servicesLoading = false;
+  const blogLoading = false;
+
+  const featuredServices = services.filter((s) => s.featured).slice(0, 3);
+  const recentPosts = blogPosts.slice(0, 3);
 
   const handleNewsletterSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
 
-    subscribeNewsletter.mutate(
-      { data: { email } },
-      {
-        onSuccess: () => {
-          toast({
-            title: "Inscription réussie",
-            description: "Vous êtes maintenant inscrit à notre newsletter.",
-          });
-          setEmail("");
-        },
-        onError: () => {
-          toast({
-            title: "Erreur",
-            description: "Une erreur est survenue lors de l'inscription.",
-            variant: "destructive",
-          });
-        },
-      },
-    );
+    toast({
+      title: "Inscription réussie",
+      description: "Vous êtes maintenant inscrit à notre newsletter.",
+    });
+    setEmail("");
   };
 
   return (
@@ -571,9 +552,8 @@ export default function Home() {
             <Button
               type="submit"
               className="h-12 bg-accent hover:bg-accent/90 text-white shrink-0 px-8"
-              disabled={subscribeNewsletter.isPending}
             >
-              {subscribeNewsletter.isPending ? "Inscription..." : "S'abonner"}
+              S'abonner
             </Button>
           </form>
           <p className="text-xs text-primary-foreground/50 mt-4">

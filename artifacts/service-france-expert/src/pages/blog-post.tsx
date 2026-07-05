@@ -1,38 +1,15 @@
-import { useGetBlogPost, getGetBlogPostQueryKey } from "@workspace/api-client-react";
 import { useParams, Link } from "wouter";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Calendar, Clock, ChevronLeft } from "lucide-react";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
+import { staticBlogPosts } from "@/data/static-data";
 
 export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
   
-  const { data: post, isLoading } = useGetBlogPost(slug || "", {
-    query: {
-      enabled: !!slug,
-      queryKey: getGetBlogPostQueryKey(slug || "")
-    }
-  });
-
-  if (isLoading) {
-    return (
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <Skeleton className="h-8 w-24 mb-8" />
-        <Skeleton className="h-12 w-3/4 mb-6" />
-        <div className="flex gap-4 mb-12">
-          <Skeleton className="h-4 w-32" />
-          <Skeleton className="h-4 w-32" />
-        </div>
-        <Skeleton className="h-[400px] w-full mb-12 rounded-sm" />
-        <div className="space-y-4">
-          <Skeleton className="h-4 w-full" />
-          <Skeleton className="h-4 w-full" />
-          <Skeleton className="h-4 w-3/4" />
-        </div>
-      </div>
-    );
-  }
+  const post = staticBlogPosts.find((p) => p.slug === slug);
+  const isLoading = false;
 
   if (!post) {
     return (
@@ -95,7 +72,7 @@ export default function BlogPost() {
         <div className="prose prose-lg prose-blue max-w-none prose-headings:font-serif prose-headings:text-primary prose-a:text-accent hover:prose-a:text-accent/80 prose-img:rounded-sm">
           {/* We're assuming content is HTML or plain text that can be rendered directly */}
           {/* In a real app with markdown, you'd use react-markdown or similar */}
-          <div dangerouslySetInnerHTML={{ __html: post.content }} />
+          <div dangerouslySetInnerHTML={{ __html: post.content || "" }} />
         </div>
         
         {post.tags && post.tags.length > 0 && (

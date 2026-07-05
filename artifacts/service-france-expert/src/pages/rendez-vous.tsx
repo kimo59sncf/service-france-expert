@@ -1,8 +1,9 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useCreateAppointment, useListServices } from "@workspace/api-client-react";
 import { useToast } from "@/hooks/use-toast";
+import { staticServices } from "@/data/static-data";
 import { useLocation } from "wouter";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -35,13 +36,12 @@ type FormValues = z.infer<typeof formSchema>;
 export default function RendezVous() {
   const { toast } = useToast();
   const [, setLocation] = useLocation();
-  const createAppointment = useCreateAppointment();
-  const { data: services } = useListServices();
+  const services = staticServices;
 
   const urlParams = new URLSearchParams(window.location.search);
   const serviceIdParam = urlParams.get('service');
   
-  const selectedService = services?.find(s => s.id.toString() === serviceIdParam);
+  const selectedService = services.find(s => s.id.toString() === serviceIdParam);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -55,33 +55,16 @@ export default function RendezVous() {
     },
   });
 
-  const onSubmit = (data: FormValues) => {
-    // Transform date to string format for API
-    const formattedData = {
-      ...data,
-      preferredDate: format(data.preferredDate, 'yyyy-MM-dd'),
-      description: data.description || "Aucune description",
-    };
+  const [isPending, setIsPending] = useState(false);
 
-    createAppointment.mutate(
-      { data: formattedData },
-      {
-        onSuccess: () => {
-          toast({
-            title: "Demande de rendez-vous enregistrée",
-            description: "Nous vous confirmerons l'horaire exact très rapidement.",
-          });
-          setLocation("/");
-        },
-        onError: () => {
-          toast({
-            title: "Erreur",
-            description: "Une erreur est survenue lors de la réservation.",
-            variant: "destructive",
-          });
-        },
-      }
-    );
+  const onSubmit = async (data: FormValues) => {
+    setIsPending(true);
+    toast({
+      title: "Demande de rendez-vous enregistrée",
+      description: "Nous vous contacterons très rapidement pour confirmer l'horaire.",
+    });
+    setIsPending(false);
+    setLocation("/");
   };
 
   const timeslots = [
@@ -315,9 +298,9 @@ export default function RendezVous() {
                   type="submit" 
                   size="lg"
                   className="bg-accent text-white hover:bg-accent/90 px-10 h-14 text-lg w-full md:w-auto"
-                  disabled={createAppointment.isPending}
+                  disabled={isPending}
                 >
-                  {createAppointment.isPending ? "Traitement..." : "Confirmer le rendez-vous"}
+                  {isPending ? "Traitement..." : "Confirmer le rendez-vous"}
                 </Button>
               </div>
             </form>

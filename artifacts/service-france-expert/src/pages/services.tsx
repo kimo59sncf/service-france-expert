@@ -1,4 +1,3 @@
-import { useListServices } from "@workspace/api-client-react";
 import { Link } from "wouter";
 import {
   FileText,
@@ -10,9 +9,11 @@ import {
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Seo } from "@/components/seo";
+import { staticServices } from "@/data/static-data";
 
 export default function Services() {
-  const { data: services, isLoading } = useListServices();
+  const services = staticServices;
+  const isLoading = false;
 
   const categories = Array.isArray(services)
     ? Array.from(new Set(services.map((s) => s.category)))
