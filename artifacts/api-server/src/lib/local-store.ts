@@ -1,10 +1,21 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { enqueueMail } from "./email-queue";
+import { logger } from "./logger";
 
-export type LeadStatus = "nouveau" | "en_cours" | "rdv_pris" | "client" | "archive";
+export type LeadStatus =
+  | "nouveau"
+  | "en_cours"
+  | "rdv_pris"
+  | "client"
+  | "archive";
 export type LeadPriority = "basse" | "moyenne" | "haute";
-export type LeadSource = "contact" | "consultation" | "appointment" | "newsletter";
+export type LeadSource =
+  | "contact"
+  | "consultation"
+  | "appointment"
+  | "newsletter";
 
 export interface LeadRecord {
   id: number;
@@ -41,7 +52,11 @@ interface LeadInput {
   metadata?: Record<string, unknown>;
 }
 
-const dataDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "data");
+const dataDir = path.resolve(
+  path.dirname(fileURLToPath(import.meta.url)),
+  "..",
+  "data",
+);
 const dataFile = path.join(dataDir, "leads.json");
 
 async function ensureStore(): Promise<void> {
@@ -62,12 +77,16 @@ async function readLeads(): Promise<LeadRecord[]> {
 
 async function writeLeads(leads: LeadRecord[]): Promise<void> {
   await ensureStore();
-  await fs.writeFile(dataFile, JSON.stringify(leads, null, 2), "utf8");
+  const tmpFile = `${dataFile}.tmp`;
+  await fs.writeFile(tmpFile, JSON.stringify(leads, null, 2), "utf8");
+  await fs.rename(tmpFile, dataFile);
 }
 
 export async function listLeads(): Promise<LeadRecord[]> {
   const leads = await readLeads();
-  return leads.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  return leads.sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+  );
 }
 
 export async function createLead(input: LeadInput): Promise<LeadRecord> {
@@ -93,10 +112,34 @@ export async function createLead(input: LeadInput): Promise<LeadRecord> {
   };
   leads.unshift(lead);
   await writeLeads(leads);
+
+  // Send email notifications via queue with fallback
+  enqueueMail("sendContactNotification", {
+    type: input.type,
+    fullName: input.fullName,
+    email: input.email,
+    phone: input.phone,
+    subject: input.subject,
+    message: input.message,
+    metadata: input.metadata,
+  }).catch((err) => {
+    logger.error({ err }, "Error enqueueing contact notification");
+  });
+
+  enqueueMail("sendConfirmationEmail", {
+    email: input.email,
+    fullName: input.fullName,
+  }).catch((err) => {
+    logger.error({ err }, "Error enqueueing confirmation email");
+  });
+
   return lead;
 }
 
-export async function updateLead(id: number, updates: Partial<LeadRecord>): Promise<LeadRecord | null> {
+export async function updateLead(
+  id: number,
+  updates: Partial<LeadRecord>,
+): Promise<LeadRecord | null> {
   const leads = await readLeads();
   const index = leads.findIndex((lead) => lead.id === id);
   if (index === -1) {
@@ -119,5 +162,7 @@ export async function getLeadCount(): Promise<number> {
 
 export async function getPendingLeadCount(): Promise<number> {
   const leads = await readLeads();
-  return leads.filter((lead) => lead.status !== "client" && lead.status !== "archive").length;
+  return leads.filter(
+    (lead) => lead.status !== "client" && lead.status !== "archive",
+  ).length;
 }
